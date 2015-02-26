@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'berth.site',
     'berth.user',
 )
 
@@ -47,6 +48,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'berth', 'templates'),
 )
 
 ROOT_URLCONF = 'berth.urls'
