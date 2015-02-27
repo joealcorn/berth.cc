@@ -1,3 +1,4 @@
+sudo: false
 language: python
 python:
   - "2.7"
@@ -5,10 +6,12 @@ python:
 addons:
   postgresql: "9.3"
 
+cache: pip
+
 before_script:
   - psql -c 'create database berth;' -U postgres
 
-install: "pip install -r dev-requirements.txt"
+install: "pip install --download-cache $HOME/.cache/pip/ -r dev-requirements.txt"
 
 script: py.test --ds=berth.settings.travis
 
