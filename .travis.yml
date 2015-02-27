@@ -10,5 +10,5 @@ before_script:
 
 install: "pip install -r dev-requirements.txt"
 
-script: py.test
+script: py.test --ds=berth.settings.travis
 
