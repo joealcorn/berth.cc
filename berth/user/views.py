@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.contrib.auth import login
 from django.db import IntegrityError
 from rest_framework import generics, response
 
@@ -20,4 +22,8 @@ class CreateUser(generics.CreateAPIView):
         user = User(**serializer.data)
         user.set_password(password)
         user.save()
+
+        # also log the user in
+        user.backend = settings.AUTHENTICATION_BACKENDS[0]
+        login(self.request, user)
         return user
