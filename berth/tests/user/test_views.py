@@ -37,3 +37,39 @@ class TestCreateUserView(APITestCase):
         resp = self.client.post(self.endpoint, data)
         assert resp.status_code == 400
         assert 'email' in resp.data
+
+
+class TestSignInView(APITestCase):
+
+    endpoint = reverse_lazy('sign-in')
+
+    def test_correct_password(self):
+        user = self.create_user()
+        data = {
+            'email': user.email,
+            'password': 'password',
+        }
+
+        resp = self.client.post(self.endpoint, data)
+        assert resp.status_code == 200
+
+    def test_wrong_password(self):
+        user = self.create_user(password='test')
+        data = {
+            'email': user.email,
+            'password': 'incorrect',
+        }
+
+        resp = self.client.post(self.endpoint, data)
+        assert resp.status_code == 400
+        assert 'password' in resp.data
+
+    def test_nonexistant_email(self):
+        data = {
+            'email': 'blahblah@berth.cc',
+            'password': 'password',
+        }
+
+        resp = self.client.post(self.endpoint, data)
+        assert resp.status_code == 400
+        assert 'email' in resp.data
