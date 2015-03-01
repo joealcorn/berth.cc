@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'berth.site',
     'berth.user',
+    'berth.project',
 )
 
 MIDDLEWARE_CLASSES = (
