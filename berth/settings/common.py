@@ -89,3 +89,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# If you're using boot2docker this needs to be a directory
+# under /Users/, else we can not share it with the container
+REPO_CLONE_DIR = '/var/checkouts/'
+
+DOCKER_CMD_ENV = {}
