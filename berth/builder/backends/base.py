@@ -26,15 +26,10 @@ class Backend(object):
     # base_image = ''
 
     def __init__(self, project):
-        # self.project = project
-        # self.checkout_directory = project.get_checkout_directory()
-        # self.image_name = self.get_image_name()
-        # self.container_name = self.get_container_name()
-
-        self.project = None
-        self.checkout_directory = '/Users/joe/checkouts/docs'
-        self.image_name = 'joealcorn/docstest'
-        self.container_name = 'docstest-container'
+        self.project = project
+        self.checkout_directory = project.get_checkout_directory()
+        self.image_name = self.get_image_name()
+        self.container_name = self.get_container_name()
 
         kwargs = kwargs_from_env()
         if settings.DEBUG and osx:

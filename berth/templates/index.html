@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+{{ user.email }} bla
+
+<a href="{% url 'new-project' %}">create a new project</a>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    });
+</script>
+{% endblock %}
