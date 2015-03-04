@@ -105,7 +105,7 @@ class Backend(object):
             proc = self.docker_run(command, image_name)
             stdout, stderr = proc.communicate()
             if proc.returncode != 0:
-                raise Exception('summin went wrong: %s' % stderr)
+                raise Exception('summin went wrong: %s\n%s' % (stdout, stderr))
 
             print stdout
             self.commit_container()
