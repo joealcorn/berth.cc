@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action='{% url "update-project" pk=1 %}' method='post'>
+{{ form }}
+{% csrf_token %}
+<input type='submit'>
+</form>
+{% endblock %}
