@@ -33,6 +33,6 @@ class Fixtures(object):
 
     def create_project(self, **kwargs):
         if 'owner' not in kwargs:
-            kwargs.owner = self.user
+            kwargs['owner'] = self.user
 
         return Project.objects.create(**kwargs)

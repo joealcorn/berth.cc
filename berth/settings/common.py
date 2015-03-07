@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'berth.site',
     'berth.user',
     'berth.project',
+    'berth.job',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -99,3 +100,5 @@ STATIC_URL = '/static/'
 REPO_CLONE_DIR = '/var/checkouts/'
 
 DOCKER_CMD_ENV = {}
+
+BROKER_URL = 'amqp://guest:guest@localhost:5672//'
