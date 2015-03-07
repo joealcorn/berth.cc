@@ -12,14 +12,11 @@ class CreateProject(LoginRequired, FormView):
     template_name = 'project/new.html'
     form_class = ProjectForm
 
-    def get_success_url(self):
-        return '/'
-
     def form_valid(self, form):
         project = form.save(commit=False)
         project.owner = self.request.user
         project.save()
-        # self.success_url = reverse('project', args=[project.id])
+        self.success_url = project.get_absolute_url()
         return super(CreateProject, self).form_valid(form)
 
 
