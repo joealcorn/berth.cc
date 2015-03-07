@@ -14,12 +14,14 @@ from django.db.models.sql import InsertQuery
 from django.db.models.sql.compiler import SQLInsertCompiler
 
 
-class JobManager(Manager):
+class InsertReturningManager(Manager):
+    insert_returning = True
+
     def get_queryset(self):
-        return JobQuerySet(self.model, using=self._db)
+        return InsertReturningQuerySet(self.model, using=self._db)
 
 
-class JobQuerySet(QuerySet):
+class InsertReturningQuerySet(QuerySet):
     def _insert(self, objs, fields, return_id=False, raw=False, using=None):
         self._for_write = True
         if using is None:
