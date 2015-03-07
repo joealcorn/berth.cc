@@ -26,6 +26,13 @@ class TestJobNumbers(TestCase):
             state=constants.BUILD_STATUS_QUEUED,
         )
 
+        # i've hacked support for `insert...returning`
+        # into django. if these are failing, it's broken
+        assert job1.number == 1
+        assert job2.number == 2
+        assert job3.number == 1
+        assert job4.number == 3
+
         job1 = Job.objects.get(pk=job1.pk)
         job2 = Job.objects.get(pk=job2.pk)
         job3 = Job.objects.get(pk=job3.pk)
