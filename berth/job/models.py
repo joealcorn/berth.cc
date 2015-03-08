@@ -16,3 +16,11 @@ class Job(Model):
         unique_together = (
             ('project', 'number'),
         )
+
+    def build(self):
+        self.state = constants.BUILD_STATUS_QUEUED
+        self.save(update_fields=['state'])
+
+        from berth.job import tasks
+        chain = (tasks.checkout.s(self.pk) | tasks.commence_build.s())
+        return chain.apply_async()
