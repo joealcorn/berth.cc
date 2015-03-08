@@ -100,6 +100,10 @@ STATIC_URL = '/static/'
 REPO_CLONE_DIR = '/var/checkouts/'
 ARTIFACT_DIR = '/var/artifacts/'
 
+# This is the directory that documentation is actually served from.
+# Anything placed here will be served directly by the web server
+SERVE_DIR = '/var/serve/'
+
 DOCKER_CMD_ENV = {}
 
 BROKER_URL = 'amqp://guest:guest@localhost:5672//'

@@ -1,3 +1,4 @@
+import errno
 import os
 import platform
 import subprocess
@@ -29,6 +30,7 @@ class Backend(object):
         self.project = project
         self.checkout_directory = project.get_checkout_directory()
         self.artifact_directory = project.get_artifact_directory()
+        self.serve_directory = project.get_serve_directory()
         self.image_name = self.get_image_name()
         self.container_name = self.get_container_name()
 
@@ -46,6 +48,9 @@ class Backend(object):
         if not os.path.exists(self.artifact_directory):
             os.makedirs(self.artifact_directory)
 
+        if not os.path.exists(self.serve_directory):
+            os.makedirs(self.serve_directory)
+
     def build_command(self):
         raise NotImplementedError
 
@@ -62,6 +67,7 @@ class Backend(object):
                 raise Exception('Build failure: %s' % stderr)
 
             print stdout
+            self.link_artifacts()
         finally:
             self.remove_container()
 
@@ -78,6 +84,15 @@ class Backend(object):
         state between commited images
         '''
         return 'temp-%d' % self.project.id
+
+    def link_artifacts(self):
+        try:
+            os.unlink(self.serve_directory)
+        except OSError as exc:
+            if exc.errno != errono.ENOENT:
+                raise
+
+        os.symlink(self.artifact_directory, self.serve_directory)
 
     def commit_container(self):
         proc = subprocess.Popen(

@@ -14,12 +14,25 @@ class Project(Model):
     owner = models.ForeignKey('user.User', editable=False)
 
     def get_checkout_directory(self):
+        '''
+        Returns the directory code checkouts live
+        '''
         directory = '%s-%s-%s' % (self.owner_id, self.id, self.name)
         return path.join(settings.REPO_CLONE_DIR, directory)
 
     def get_artifact_directory(self):
+        '''
+        Returns the directory build artifacts are placed in
+        during builds
+        '''
         directory = '%s-%s' % (self.owner_id, self.id)
         return path.join(settings.ARTIFACT_DIR, directory)
+
+    def get_serve_directory(self):
+        '''
+        Returns the directory builds should be served from
+        '''
+        return path.join(settings.SERVE_DIR, self.slug)
 
     def get_absolute_url(self):
         return reverse('update-project', args=[self.pk])
