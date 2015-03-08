@@ -1,4 +1,4 @@
-from os import path
+import os
 import platform
 import subprocess
 
@@ -28,6 +28,7 @@ class Backend(object):
     def __init__(self, project):
         self.project = project
         self.checkout_directory = project.get_checkout_directory()
+        self.artifact_directory = project.get_artifact_directory()
         self.image_name = self.get_image_name()
         self.container_name = self.get_container_name()
 
@@ -37,10 +38,13 @@ class Backend(object):
             kwargs['tls'].assert_hostname = False
         self.docker = Client(**kwargs)
 
-        if not path.exists(self.checkout_directory):
+        if not os.path.exists(self.checkout_directory):
             raise NonexistantCheckout(
                 'No such checkout: %s' % self.checkout_directory
             )
+
+        if not os.path.exists(self.artifact_directory):
+            os.makedirs(self.artifact_directory)
 
     def build_command(self):
         raise NotImplementedError
@@ -122,6 +126,7 @@ class Backend(object):
         cmd = [
             'docker', 'run',
             '-v', '%s:/root/build/docs' % self.checkout_directory,
+            '-v', '%s:/root/build/artifacts' % self.artifact_directory,
             '-w', '/root/build/docs',
             '--name', self.container_name,
             image_name,

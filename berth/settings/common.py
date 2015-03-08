@@ -95,9 +95,10 @@ LOGIN_URL = 'sign-in'
 
 STATIC_URL = '/static/'
 
-# If you're using boot2docker this needs to be a directory
+# If you're using boot2docker these need to be directories
 # under /Users/, else we can not share it with the container
 REPO_CLONE_DIR = '/var/checkouts/'
+ARTIFACT_DIR = '/var/artifacts/'
 
 DOCKER_CMD_ENV = {}
 

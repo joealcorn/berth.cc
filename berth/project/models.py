@@ -17,5 +17,9 @@ class Project(Model):
         directory = '%s-%s-%s' % (self.owner_id, self.id, self.name)
         return path.join(settings.REPO_CLONE_DIR, directory)
 
+    def get_artifact_directory(self):
+        directory = '%s-%s' % (self.owner_id, self.id)
+        return path.join(settings.ARTIFACT_DIR, directory)
+
     def get_absolute_url(self):
         return reverse('update-project', args=[self.pk])

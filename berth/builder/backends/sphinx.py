@@ -15,7 +15,7 @@ class SphinxBackend(Backend):
             '-b', 'html',
             '-d', 'build/doctrees',
             'source',
-            'build/html',
+            '/root/build/artifacts',
         ]
 
     def setup_commands(self):
