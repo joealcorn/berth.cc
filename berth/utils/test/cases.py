@@ -5,13 +5,13 @@ from rest_framework.test import APITestCase
 from .fixtures import Fixtures
 
 
-class BaseTestCase(Fixtures, Exam):
+class BaseTestCase(Fixtures):
     pass
 
 
-class TestCase(TestCase, BaseTestCase):
+class TestCase(Exam, TestCase, BaseTestCase):
     pass
 
 
-class APITestCase(APITestCase, BaseTestCase):
+class APITestCase(Exam, APITestCase, BaseTestCase):
     pass

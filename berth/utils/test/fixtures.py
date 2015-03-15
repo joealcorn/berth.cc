@@ -1,5 +1,9 @@
+import os
+from random import random
 from uuid import uuid4
 
+from django.conf import settings
+from django.db import IntegrityError
 from exam import fixture
 
 from berth.project.models import Project
@@ -8,6 +12,11 @@ from berth.user.models import User
 
 class Fixtures(object):
 
+    def load_data(self, fname):
+        path = os.path.join(settings.BASE_DIR, 'berth/tests/data/', fname)
+        with open(path, 'r') as f:
+            return f.read()
+
     @fixture
     def project(self):
         return self.create_project(
@@ -15,6 +24,7 @@ class Fixtures(object):
             slug='test-project',
             repo_url='https://github.com/joealcorn/berth.cc.git',
             owner=self.user,
+            repo_identifier=0,
         )
 
     @fixture
@@ -38,4 +48,6 @@ class Fixtures(object):
         if 'subdomain' not in kwargs:
             kwargs['subdomain'] = uuid4().hex
 
+        kwargs.setdefault('repo_source', 0)
+        kwargs.setdefault('repo_identifier', 1)
         return Project.objects.create(**kwargs)

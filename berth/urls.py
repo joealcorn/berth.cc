@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^', include('berth.site.urls')),
     url(r'^', include('berth.user.urls')),
     url(r'^', include('berth.project.urls')),
+    url(r'^webhooks/', include('berth.webhooks.urls')),
 )

@@ -1,3 +1,4 @@
+
 from os import path
 
 from django.conf import settings
@@ -5,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 
 from berth.models import Model
+from berth.project import constants
 
 
 class Project(Model):
@@ -13,6 +15,13 @@ class Project(Model):
     repo_url = models.CharField(max_length=256)
     owner = models.ForeignKey('user.User', editable=False)
     subdomain = models.CharField(max_length=128, unique=True)
+    repo_identifier = models.IntegerField()
+    repo_source = models.PositiveSmallIntegerField(choices=constants.REPO_SOURCE_CHOICES)
+
+    class Meta:
+        unique_together = (
+            ('repo_identifier', 'repo_source'),
+        )
 
     def get_checkout_directory(self):
         '''
