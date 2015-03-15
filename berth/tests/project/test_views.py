@@ -34,6 +34,7 @@ class TestProjectUpdate(TestCase):
         resp = self.client.post(self.endpoint, data={
             'name': 'New project name',
             'slug': 'new-project-name',
+            'subdomain': 'example',
             'repo_url': self.project.repo_url,
         })
         assert resp.status_code == 302
@@ -41,3 +42,31 @@ class TestProjectUpdate(TestCase):
         project = Project.objects.get(pk=self.project.pk)
         assert project.name == 'New project name'
         assert project.slug == 'new-project-name'
+        assert project.subdomain == 'example'
+
+    def test_update_to_reserved_subdomain(self):
+        self.client.login(email=self.user.email, password='password')
+        resp = self.client.post(self.endpoint, data={
+            'subdomain': 'blog',
+            'name': self.project.name,
+            'slug': self.project.slug,
+            'repo_url': self.project.repo_url,
+        })
+        assert resp.status_code == 200
+        form = resp.context_data['form']
+        assert not form.is_valid()
+        assert form.errors['subdomain'][0] == 'Subdomain is reserved'
+
+    def test_duplicate_subdomain(self):
+        project = self.create_project()
+        self.client.login(email=self.user.email, password='password')
+        resp = self.client.post(self.endpoint, data={
+            'subdomain': project.subdomain,
+            'name': self.project.name,
+            'slug': self.project.slug,
+            'repo_url': self.project.repo_url,
+        })
+        assert resp.status_code == 200
+        form = resp.context_data['form']
+        assert not form.is_valid()
+        assert form.errors['subdomain'][0] == 'Project with this Subdomain already exists.'

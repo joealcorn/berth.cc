@@ -107,3 +107,9 @@ SERVE_DIR = '/var/serve/'
 DOCKER_CMD_ENV = {}
 
 BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+
+RESERVED_SUBDOMAINS = (
+    'www', 'wwww', 'ww', 'blog', 'docs', 'berth',
+    'dev', 'developer', 'code', 'blog', 'docs', 'berth',
+    'how', 'howto', 'app',
+)

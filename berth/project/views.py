@@ -22,8 +22,8 @@ class CreateProject(LoginRequired, FormView):
 
 class ProjectUpdate(LoginRequired, UpdateView):
     model = Project
-    fields = ['name', 'slug', 'repo_url']
     template_name = 'project/project.html'
+    form_class = ProjectForm
 
     def get_object(self):
         pk = self.kwargs[self.pk_url_kwarg]

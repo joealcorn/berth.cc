@@ -35,4 +35,7 @@ class Fixtures(object):
         if 'owner' not in kwargs:
             kwargs['owner'] = self.user
 
+        if 'subdomain' not in kwargs:
+            kwargs['subdomain'] = uuid4().hex
+
         return Project.objects.create(**kwargs)

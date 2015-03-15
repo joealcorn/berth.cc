@@ -12,6 +12,7 @@ class Project(Model):
     slug = models.CharField(max_length=128, unique=True)
     repo_url = models.CharField(max_length=256)
     owner = models.ForeignKey('user.User', editable=False)
+    subdomain = models.CharField(max_length=128, unique=True)
 
     def get_checkout_directory(self):
         '''
